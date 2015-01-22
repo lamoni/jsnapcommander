@@ -22,6 +22,13 @@ abstract class JSnapTriggerDriverAbstract
 
     }
 
+    static public function getConfigDefinition()
+    {
+
+        return static::getConfigIO()->getConfigDefinition();
+
+    }
+
     abstract public function snap($deviceName);
 
     abstract public function check($deviceName, JSnapSnapSectionBundle $preSnap, JSnapSnapSectionBundle $postSnap);

@@ -47,4 +47,5 @@ abstract class JSnapIODriverAbstract
         "_" .
         $jSnapTime;
     }
+
 }

@@ -53,13 +53,14 @@ class JSnapIODriverFiles extends JSnapIODriverAbstract
 
         $swapDates = array();
 
-        foreach (glob("{$swapPath}{$deviceName}_*") as $swapFilename) {
+        foreach (glob("{$swapPath}/{$deviceName}_*") as $swapFilename) {
 
-            $swapFilename = str_replace($swapPath, "", $swapFilename);
+            $swapFilename = basename($swapFilename);
 
             $swapFilename = $this->splitKey($swapFilename);
 
             $swapDates[$swapFilename[0]][] = $swapFilename[1];
+
         }
 
         if (count($swapDates) <= 0) {

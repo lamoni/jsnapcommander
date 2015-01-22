@@ -24,12 +24,42 @@ class JSnapConfigTriggerShell extends JSnapConfigAbstract
     {
 
         return array(
-            'JSnapExecutable'   => 'is_executable',
-            'ConfigFile'        => 'is_readable',
-            'JuiseExecutable'   => 'is_executable',
-            'SwapPath'          => 'is_dir',
-            'DeviceUsername'    => 'is_string',
-            'DevicePassword'    => 'is_string'
+            'JSnapExecutable' => array(
+                'validator' => 'is_executable',
+                'header'    => 'JSnap Executable',
+                'example'   => '/usr/jawa/bin/jsnap',
+                'type'      => 'text'
+            ),
+            'ConfigFile'      => array(
+                'validator' => 'is_readable',
+                'header'    => 'JSnap Config File',
+                'example'   => '/usr/jawa/jsnap/samples/sample.conf',
+                'type'      => 'text'
+            ),
+            'JuiseExecutable' => array(
+                'validator' => 'is_executable',
+                'header'    => 'JUISE Executable',
+                'example'   => '/usr/jawa/bin/juise',
+                'type'      => 'text'
+            ),
+            'SwapPath'       => array(
+                'validator' => 'is_dir',
+                'header'    => 'Swap Path',
+                'example'   => '/var/www/html/swap',
+                'type'      => 'text'
+            ),
+            'DeviceUsername'=> array(
+                'validator' => 'is_string',
+                'header'    => 'Device Username',
+                'example'   => 'lamoni',
+                'type'      => 'text'
+            ),
+            'DevicePassword'=> array(
+                'validator' => 'is_string',
+                'header'    => 'Device Password',
+                'example'   => 'secr3t!',
+                'type'      => 'password'
+            )
         );
 
     }

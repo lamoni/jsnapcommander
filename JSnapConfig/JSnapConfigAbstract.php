@@ -14,7 +14,7 @@ abstract class JSnapConfigAbstract
 
         $this->configData['jSnapTime'] = time();
 
-        $this->acceptableConfigData = $this->getConfigDefinition();
+        $this->acceptableConfigData = static::getConfigDefinition();
 
         $this->acceptableConfigData['jSnapTime'] = 'is_numeric';
 
@@ -29,7 +29,7 @@ abstract class JSnapConfigAbstract
 
         foreach ($configData as $configDataKey => $configDataValue) {
 
-            if (!$this->acceptableConfigData[$configDataKey]($configDataValue)) {
+            if (!$this->acceptableConfigData[$configDataKey]['validator']($configDataValue)) {
 
                 throw new \Exception(
                     "JSnapConfigData parameter {$configDataKey} failed validation"

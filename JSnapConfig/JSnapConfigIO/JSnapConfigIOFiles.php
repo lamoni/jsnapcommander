@@ -9,7 +9,12 @@ class JSnapConfigIOFiles extends JSnapConfigAbstract
     {
 
         return array(
-            'SwapPath' => 'is_dir',
+            'SwapPath' => array(
+                'validator' => 'is_dir',
+                'header'    => 'Swap Path',
+                'example'   => '/var/www/html/swap',
+                'type'      => 'text'
+            )
         );
 
     }
