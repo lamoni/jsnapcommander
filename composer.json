@@ -1,6 +1,7 @@
 {
     "name": "lamoni/jsnapcommander",
     "description": "PHP classes for dealing with Juniper's Snapshot Administrator(JSnap)",
+    "license": "MIT",
     "authors": [
         {
             "name": "Lamoni Finlayson",
