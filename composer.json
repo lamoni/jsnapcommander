@@ -1,0 +1,10 @@
+{
+    "name": "lamoni/jsnapcommander",
+    "description": "PHP classes for dealing with Juniper's Snapshot Administrator(JSnap)",
+    "authors": [
+        {
+            "name": "Lamoni Finlayson",
+            "email": "lamonif@gmail.com"
+        }
+    ]
+}
