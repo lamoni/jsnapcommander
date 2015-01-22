@@ -11,6 +11,8 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
     public function snap($deviceName)
     {
 
+        $deviceName = str_replace(array(';', '<', '>'), '', $deviceName);
+
         try {
 
             extract($this->configIO->getConfigData());
@@ -77,6 +79,8 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 
     public function check($deviceName, JSnapSnapSectionBundle $preSnap, JSnapSnapSectionBundle $postSnap)
     {
+
+        $deviceName = str_replace(array(';', '<', '>'), '', $deviceName);
 
         try {
 
