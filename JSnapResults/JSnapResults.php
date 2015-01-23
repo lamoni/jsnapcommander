@@ -1,4 +1,4 @@
-<?php namespace JSnapCommander\JSnapResults;
+<?php namespace Lamoni\JSnapCommander\JSnapResults;
 
 class JSnapResults
 {

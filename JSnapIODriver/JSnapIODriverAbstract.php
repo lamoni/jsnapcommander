@@ -1,6 +1,6 @@
-<?php namespace JSnapCommander\JSnapIODriver;
+<?php namespace Lamoni\JSnapCommander\JSnapIODriver;
 
-use JSnapCommander\JSnapConfig\JSnapConfigAbstract;
+use Lamoni\JSnapCommander\JSnapConfig\JSnapConfigAbstract;
 
 abstract class JSnapIODriverAbstract
 {

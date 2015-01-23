@@ -1,4 +1,4 @@
-<?php namespace JSnapCommander\JSnapHelpers;
+<?php namespace Lamoni\JSnapCommander\JSnapHelpers;
 
 class JSnapHelpers {
     static public function JSONOutput($text, $code = 1, $die = true)

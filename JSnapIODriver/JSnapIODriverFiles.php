@@ -1,9 +1,9 @@
-<?php namespace JSnapCommander\JSnapIODriver;
+<?php namespace Lamoni\JSnapCommander\JSnapIODriver;
 
-use JSnapCommander\JSnapConfig\JSnapConfigAbstract;
-use JSnapCommander\JSnapHelpers\JSnapHelpers;
-use JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSectionBundle;
-use JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSection\JSnapSnapSectionXML;
+use Lamoni\JSnapCommander\JSnapConfig\JSnapConfigAbstract;
+use Lamoni\JSnapCommander\JSnapHelpers\JSnapHelpers;
+use Lamoni\JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSectionBundle;
+use Lamoni\JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSection\JSnapSnapSectionXML;
 
 class JSnapIODriverFiles extends JSnapIODriverAbstract
 {

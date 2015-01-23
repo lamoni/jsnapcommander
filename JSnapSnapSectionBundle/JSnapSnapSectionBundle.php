@@ -1,4 +1,4 @@
-<?php namespace JSnapCommander\JSnapSnapSectionBundle;
+<?php namespace Lamoni\JSnapCommander\JSnapSnapSectionBundle;
 
 
 class JSnapSnapSectionBundle

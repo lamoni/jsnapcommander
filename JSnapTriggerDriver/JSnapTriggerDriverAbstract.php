@@ -1,7 +1,7 @@
-<?php namespace JSnapCommander\JSnapTriggerDriver;
+<?php namespace Lamoni\JSnapCommander\JSnapTriggerDriver;
 
-use JSnapCommander\JSnapConfig\JSnapConfigAbstract;
-use JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSectionBundle;
+use Lamoni\JSnapCommander\JSnapConfig\JSnapConfigAbstract;
+use Lamoni\JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSectionBundle;
 
 abstract class JSnapTriggerDriverAbstract
 {

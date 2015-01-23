@@ -1,6 +1,6 @@
-<?php namespace JSnapCommander\JSnapConfig\JSnapConfigIO;
+<?php namespace Lamoni\JSnapCommander\JSnapConfig\JSnapConfigIO;
 
-use JSnapCommander\JSnapConfig\JSnapConfigAbstract;
+use Lamoni\JSnapCommander\JSnapConfig\JSnapConfigAbstract;
 
 class JSnapConfigIOFiles extends JSnapConfigAbstract
 {

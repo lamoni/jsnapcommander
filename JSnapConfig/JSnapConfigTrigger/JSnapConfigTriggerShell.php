@@ -1,6 +1,6 @@
-<?php namespace JSnapCommander\JSnapConfig\JSnapConfigTrigger;
+<?php namespace Lamoni\JSnapCommander\JSnapConfig\JSnapConfigTrigger;
 
-use JSnapCommander\JSnapConfig\JSnapConfigAbstract;
+use Lamoni\JSnapCommander\JSnapConfig\JSnapConfigAbstract;
 
 class JSnapConfigTriggerShell extends JSnapConfigAbstract
 {

@@ -1,4 +1,4 @@
-<?php namespace JSnapCommander\JSnapConfig;
+<?php namespace Lamoni\JSnapCommander\JSnapConfig;
 
 abstract class JSnapConfigAbstract
 {

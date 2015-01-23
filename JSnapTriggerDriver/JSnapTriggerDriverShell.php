@@ -1,9 +1,9 @@
-<?php namespace JSnapCommander\JSnapTriggerDriver;
+<?php namespace Lamoni\JSnapCommander\JSnapTriggerDriver;
 
-use JSnapCommander\JSnapResults\JSnapResults;
-use JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSection\JSnapSnapSectionXML;
-use JSnapCommander\JSnapHelpers\JSnapHelpers;
-use JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSectionBundle;
+use Lamoni\JSnapCommander\JSnapResults\JSnapResults;
+use Lamoni\JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSection\JSnapSnapSectionXML;
+use Lamoni\JSnapCommander\JSnapHelpers\JSnapHelpers;
+use Lamoni\JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSectionBundle;
 
 class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 {
@@ -18,12 +18,12 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
             chdir($SwapPath);
 
             $snapCmdOutput = shell_exec(escapeshellcmd('PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:' .
-                escapeshellarg($JuiseExecutablePath) . ':' . escapeshellarg($JSnapExecutablePath) . ' ' .
-                escapeshellarg($JSnapExecutable) . ' --snap ' . $jSnapTime .
+                $JuiseExecutablePath . ':' . $JSnapExecutablePath . ' ' .
+                $JSnapExecutable . ' --snap ' . $jSnapTime .
                 ' -l ' . escapeshellarg($DeviceUsername) .
                 ' -p ' . escapeshellarg($DevicePassword) .
                 ' -t ' . escapeshellarg($deviceName) . ' ' .
-                escapeshellarg($ConfigFile) . " 2>&1"));
+                $ConfigFile) . " 2>&1");
 
             /*
              * Validate jSnap ran correctly
@@ -78,8 +78,6 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
     public function check($deviceName, JSnapSnapSectionBundle $preSnap, JSnapSnapSectionBundle $postSnap)
     {
 
-        $deviceName = escapeshellarg($deviceName);
-
         try {
 
             extract($this->configIO->getConfigData());
@@ -106,10 +104,11 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 
             $output = shell_exec(escapeshellcmd(
                 "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:".
-                "{$JuiseExecutablePath}:{$JSnapExecutablePath} " .
-                "{$JSnapExecutable} --check {$snapTimes[0]},{$snapTimes[1]}" .
-                " -t {$deviceName} {$ConfigFile} 2>&1"
-            ));
+                $JuiseExecutablePath . ":" . $JSnapExecutablePath . " " .
+                $JSnapExecutable . " --check {$snapTimes[0]},{$snapTimes[1]}" .
+                " -t ".escapeshellarg($deviceName) . " " . $ConfigFile) . " 2>&1");
+
+
 
             foreach ($fileNames as $filename) {
 
