@@ -30,10 +30,10 @@ class JSnapResults
 
     }
 
-    public function addFailedTest($testName, $failedTest)
+    public function addFailedTest($testName, $failedTestTitle, $failedTestContent)
     {
 
-        $this->failedTests[$testName][] = $failedTest;
+        $this->failedTests[$testName][$failedTestTitle] = $failedTestContent;
 
     }
 

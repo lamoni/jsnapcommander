@@ -145,14 +145,21 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 
                 foreach ($testInfo as $info) {
 
-                    if (substr($info, 0, 7) === "FAILED:") {
+                    if (substr($info, 0, 8) === "FAILED: ") {
 
-                        $jSnapResults->addFailedTest($testName."-Failed", $info);
+                        list($infoName, $infoContent) = explode("\n", $info, 2);
+
+                        $infoName = substr($infoName, 8);
+
+                        $jSnapResults->addFailedTest($testName, $infoName, $infoContent);
+
 
                     }
                     else {
 
-                        $jSnapResults->addPassedTest($testName."-Passed", $info);
+                        $infoContent = substr($info, 8);
+
+                        $jSnapResults->addPassedTest($testName, $infoContent);
 
                     }
                 }
