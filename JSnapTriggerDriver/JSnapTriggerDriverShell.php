@@ -18,12 +18,12 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
             chdir($SwapPath);
 
             $snapCmdOutput = shell_exec(escapeshellcmd('PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:' .
-                $JuiseExecutablePath . ':' . $JSnapExecutablePath . ' ' .
-                $JSnapExecutable . ' --snap ' . $jSnapTime .
-                ' -l ' . escapeshellarg($DeviceUsername) .
-                ' -p ' . escapeshellarg($DevicePassword) .
-                ' -t ' . escapeshellarg($deviceName) . ' ' .
-                $ConfigFile) . " 2>&1");
+                    $JuiseExecutablePath . ':' . $JSnapExecutablePath . ' ' .
+                    $JSnapExecutable . ' --snap ' . $jSnapTime .
+                    ' -l ' . escapeshellarg($DeviceUsername) .
+                    ' -p ' . escapeshellarg($DevicePassword) .
+                    ' -t ' . escapeshellarg($deviceName) . ' ' .
+                    $ConfigFile) . " 2>&1");
 
             /*
              * Validate jSnap ran correctly
@@ -103,10 +103,10 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
             }
 
             $output = shell_exec(escapeshellcmd(
-                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:".
-                $JuiseExecutablePath . ":" . $JSnapExecutablePath . " " .
-                $JSnapExecutable . " --check {$snapTimes[0]},{$snapTimes[1]}" .
-                " -t ".escapeshellarg($deviceName) . " " . $ConfigFile) . " 2>&1");
+                    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:".
+                    $JuiseExecutablePath . ":" . $JSnapExecutablePath . " " .
+                    $JSnapExecutable . " --check {$snapTimes[0]},{$snapTimes[1]}" .
+                    " -t ".escapeshellarg($deviceName) . " " . $ConfigFile) . " 2>&1");
 
 
 
@@ -137,26 +137,24 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 
                 $testName = $sectionSplit[0];
 
-                if (strpos($section, "TEST FAILED") === false) {
+                $testContents = $sectionSplit[1];
 
-                    $tests = array_filter(explode("+ TEST PASSED: ", $sectionSplit[1]));
+                $testInfo = array_filter(
+                    preg_split("/[+-] TEST /", $testContents)
+                );
 
-                    foreach ($tests as $test) {
+                foreach ($testInfo as $info) {
 
-                        $jSnapResults->addPassedTest($testName, $test);
+                    if (substr($info, 0, 7) === "FAILED:") {
 
-                    }
-
-                }
-                else {
-
-                    $tests = array_filter(explode("- TEST FAILED: ", $sectionSplit[1]));
-                    foreach ($tests as $test) {
-
-                        $jSnapResults->addFailedTest($testName, $test);
+                        $jSnapResults->addFailedTest($testName."-Failed", $info);
 
                     }
+                    else {
 
+                        $jSnapResults->addPassedTest($testName."-Passed", $info);
+
+                    }
                 }
 
             }
