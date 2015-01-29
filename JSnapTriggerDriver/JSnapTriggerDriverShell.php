@@ -178,4 +178,89 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 
     }
 
+    public function snapCheck($deviceName)
+    {
+
+        try {
+
+            extract($this->configIO->getConfigData());
+
+            chdir($SwapPath);
+
+            $output = shell_exec(escapeshellcmd(
+                    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:".
+                    $JuiseExecutablePath . ":" . $JSnapExecutablePath . " " .
+                    $JSnapExecutable . " --snapcheck snapCheck{$deviceName}" .
+                    ' -l ' . escapeshellarg($DeviceUsername) .
+                    ' -p ' . escapeshellarg($DevicePassword) .
+                    ' -t ' . escapeshellarg($deviceName) . ' ' .
+                    escapeshellarg($CheckCommandLineArguments) . ' ' . $ConfigFile) . " 2>&1");
+
+
+            foreach (glob("{$deviceName}*.xml") as $filename) {
+
+                unlink($filename);
+
+            }
+
+            $output = implode("\n", array_slice(explode("\n", $output), 4));
+
+            if (strpos($output, "CHECKING SECTION: ") === false) {
+
+                throw new \Exception("jSnap failed to run, please ensure you can run it from the shell");
+
+            }
+
+            $jSnapResults = new JSnapResults($deviceName);
+
+            foreach (explode("CHECKING SECTION: ", $output) as $key => $section) {
+
+                if ($key == 0) continue;
+
+                $sectionSplit =
+                    explode("\n---------------------------------------------------------------------------\n", $section);
+
+                $sectionSplit = array_filter($sectionSplit);
+
+                $testName = $sectionSplit[0];
+
+                $testContents = $sectionSplit[1];
+
+                $testInfo = array_filter(
+                    preg_split('/(\+ TEST |- TEST |SKIPPING: )/', $testContents)
+                );
+
+                foreach ($testInfo as $info) {
+
+                    if (substr($info, 0, 8) === "FAILED: ") {
+
+                        list($infoName, $infoContent) = explode("\n", $info, 2);
+
+                        $infoName = substr($infoName, 8);
+
+                        $jSnapResults->addFailedTest($testName, $infoName, $infoContent);
+
+
+                    }
+                    elseif (substr($info, 0, 8) === "PASSED: ") {
+
+                        $infoContent = substr($info, 8);
+
+                        $jSnapResults->addPassedTest($testName, $infoContent);
+
+                    }
+                }
+
+            }
+
+            return $jSnapResults;
+
+        } catch (\Exception $e) {
+
+            JSnapHelpers::JSONOutput($e->getMessage(), 1);
+
+        }
+
+    }
+
 }

@@ -33,6 +33,13 @@ class JSnapCommander
 
     }
 
+    public function snapCheck($deviceName)
+    {
+
+        return $this->triggerDriver->snapCheck($deviceName)->toArray();
+
+    }
+
     public function check($deviceName, $presnapID, $postsnapID)
     {
 

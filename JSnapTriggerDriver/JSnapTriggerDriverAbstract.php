@@ -33,4 +33,6 @@ abstract class JSnapTriggerDriverAbstract
 
     abstract public function check($deviceName, JSnapSnapSectionBundle $preSnap, JSnapSnapSectionBundle $postSnap);
 
+    abstract public function snapCheck($deviceName);
+
 }
