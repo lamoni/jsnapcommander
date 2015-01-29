@@ -23,6 +23,7 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
                     ' -l ' . escapeshellarg($DeviceUsername) .
                     ' -p ' . escapeshellarg($DevicePassword) .
                     ' -t ' . escapeshellarg($deviceName) . ' ' .
+                    escapeshellarg($SnapCommandLineArguments) . ' ' .
                     $ConfigFile) . " 2>&1");
 
             /*
@@ -106,7 +107,8 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
                     "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:".
                     $JuiseExecutablePath . ":" . $JSnapExecutablePath . " " .
                     $JSnapExecutable . " --check {$snapTimes[0]},{$snapTimes[1]}" .
-                    " -t ".escapeshellarg($deviceName) . " " . $ConfigFile) . " 2>&1");
+                    " -t ".escapeshellarg($deviceName) .
+                    escapeshellarg($CheckCommandLineArguments) . ' ' . $ConfigFile) . " 2>&1");
 
 
 

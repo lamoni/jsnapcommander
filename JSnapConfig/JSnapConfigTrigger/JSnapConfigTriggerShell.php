@@ -59,7 +59,20 @@ class JSnapConfigTriggerShell extends JSnapConfigAbstract
                 'header'    => 'Device Password',
                 'example'   => 'secr3t!',
                 'type'      => 'password'
+            ),
+            'SnapCommandLineArguments'=> array(
+                'validator' => 'is_string',
+                'header'    => 'Snap Command-line Arguments',
+                'example'   => '--nostricthostkeycheck',
+                'type'      => 'text'
+            ),
+            'CheckCommandLineArguments'=> array(
+                'validator' => 'is_string',
+                'header'    => 'Check Command-line Arguments',
+                'example'   => '--xml',
+                'type'      => 'text'
             )
+
         );
 
     }
