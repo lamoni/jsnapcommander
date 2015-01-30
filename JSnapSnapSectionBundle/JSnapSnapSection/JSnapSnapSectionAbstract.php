@@ -36,11 +36,11 @@ abstract class JSnapSnapSectionAbstract
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getSnapData()
     {
-        return (string)$this->snapData;
+        return $this->snapData;
     }
 
 

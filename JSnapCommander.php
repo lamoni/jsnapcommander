@@ -19,13 +19,13 @@ class JSnapCommander
 
     }
 
-    public function snap($deviceName)
+    public function snapShot($deviceName)
     {
 
         return json_encode(
             array(
-                'snapID' => $this->ioDriver->save($deviceName,
-                    $this->triggerDriver->snap($deviceName)
+                'snapID' => $this->ioDriver->saveSnapshot($deviceName,
+                    $this->triggerDriver->snapShot($deviceName)
                 ),
                 'error' => 0
             )
@@ -33,10 +33,33 @@ class JSnapCommander
 
     }
 
-    public function snapCheck($deviceName)
+    public function snapCheck($deviceName, $saveSnapCheck=false)
     {
 
-        return $this->triggerDriver->snapCheck($deviceName)->toArray();
+        $snapCheck = $this->triggerDriver->snapCheck($deviceName);
+
+        if ($saveSnapCheck) {
+
+            $snapCheck = array (
+                'snapID' => $this->ioDriver->saveSnapCheck($deviceName, $snapCheck),
+                'error' => 0
+            );
+
+        }
+        else {
+            $snapCheck = $snapCheck->toArray();
+        }
+
+        return $snapCheck;
+
+    }
+
+    public function loadSnapCheck($jSnapKey)
+    {
+
+        list($deviceName, $jSnapTime) = $this->ioDriver->splitKey($jSnapKey);
+
+        return $this->ioDriver->loadSnapCheck($deviceName, $jSnapTime);
 
     }
 
@@ -44,15 +67,15 @@ class JSnapCommander
     {
 
         return $this->triggerDriver->check($deviceName,
-            $this->ioDriver->load($deviceName, $presnapID),
-            $this->ioDriver->load($deviceName, $postsnapID)
+            $this->ioDriver->loadSnapshot($deviceName, $presnapID),
+            $this->ioDriver->loadSnapshot($deviceName, $postsnapID)
         )->toArray();
 
     }
 
     public function loadPreSnapList($deviceName)
     {
-        $snapShots = $this->ioDriver->loadList($deviceName);
+        $snapShots = $this->ioDriver->loadSnapshotList($deviceName);
 
         $jSnapSnapList = array();
 
@@ -75,7 +98,7 @@ class JSnapCommander
     public function loadPostSnapList($deviceName, $startTime)
     {
 
-        $snapShots = $this->ioDriver->loadList($deviceName);
+        $snapShots = $this->ioDriver->loadSnapshotList($deviceName);
 
         $jSnapSnapList = array();
 
@@ -94,6 +117,13 @@ class JSnapCommander
         }
 
         return $jSnapSnapList;
+
+    }
+
+    public function splitKey($key)
+    {
+
+        return $this->ioDriver->splitKey($key);
 
     }
 

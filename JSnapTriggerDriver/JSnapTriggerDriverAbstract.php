@@ -29,7 +29,7 @@ abstract class JSnapTriggerDriverAbstract
 
     }
 
-    abstract public function snap($deviceName);
+    abstract public function snapShot($deviceName);
 
     abstract public function check($deviceName, JSnapSnapSectionBundle $preSnap, JSnapSnapSectionBundle $postSnap);
 

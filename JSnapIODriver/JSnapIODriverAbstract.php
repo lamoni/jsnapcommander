@@ -1,6 +1,7 @@
 <?php namespace Lamoni\JSnapCommander\JSnapIODriver;
 
 use Lamoni\JSnapCommander\JSnapConfig\JSnapConfigAbstract;
+use Lamoni\JSnapCommander\JSnapResults\JSnapResults;
 
 abstract class JSnapIODriverAbstract
 {
@@ -21,11 +22,15 @@ abstract class JSnapIODriverAbstract
 
     }
 
-    abstract public function save($deviceName, array $jSnapResults);
+    abstract public function saveSnapshot($deviceName, array $jSnapResults);
 
-    abstract public function load($deviceName, $jSnapKey);
+    abstract public function saveSnapCheck($deviceName, JSnapResults $jSnapResults);
 
-    abstract public function loadList($deviceName);
+    abstract public function loadSnapshot($deviceName, $jSnapKey);
+
+    abstract public function loadSnapCheck($deviceName, $jSnapKey);
+
+    abstract public function loadSnapshotList($deviceName);
 
     public function generateCurrentKey($deviceName)
     {

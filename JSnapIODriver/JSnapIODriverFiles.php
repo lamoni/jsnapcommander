@@ -1,45 +1,77 @@
 <?php namespace Lamoni\JSnapCommander\JSnapIODriver;
 
-use Lamoni\JSnapCommander\JSnapConfig\JSnapConfigAbstract;
 use Lamoni\JSnapCommander\JSnapHelpers\JSnapHelpers;
+use Lamoni\JSnapCommander\JSnapResults\JSnapResults;
 use Lamoni\JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSectionBundle;
 use Lamoni\JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSection\JSnapSnapSectionXML;
 
 class JSnapIODriverFiles extends JSnapIODriverAbstract
 {
 
-    public function save($deviceName, array $jSnapResults)
+    public function saveSnapshot($deviceName, array $jSnapResults)
     {
+
         extract($this->configIO->getConfigData());
 
-        $finalSnapContent = "";
-        foreach ($jSnapResults as $jResult) {
-            $finalSnapContent .= $jResult->getSnapType() . "++----------++" . $jResult->getSnapData() . "@===============@";
-        }
+        $finalSnapContent = serialize($jSnapResults);
 
-        $finalSnapContent = rtrim($finalSnapContent, "@===============@");
-        if (file_put_contents($SwapPath . "/" . $this->generateCurrentKey($deviceName), $finalSnapContent) !== false) {
+        if (file_put_contents(
+                $SnapshotSwapPath . "/" . $this->generateCurrentKey($deviceName), $finalSnapContent
+            ) !== false) {
+
             return $this->generateCurrentKey($deviceName);
-        } else {
-            throw new \Exception(__CLASS__ . " 'save' method call failed");
+
+        }
+        else {
+
+            throw new \Exception(__CLASS__ . " 'saveSnapshot' method call failed");
+
         }
 
     }
 
-    public function load($deviceName, $key)
+    public function saveSnapCheck($deviceName, JSnapResults $jSnapResults)
     {
 
         extract($this->configIO->getConfigData());
 
-        $loadSnapContent = file_get_contents($SwapPath . "/" . $this->formatKey($deviceName, $key));
-        $snapSections = explode("@===============@", $loadSnapContent);
+        $finalSnapContent = serialize($jSnapResults);
+
+        if (file_put_contents(
+                $SnapCheckSwapPath . "/" .
+                $this->generateCurrentKey($deviceName), $finalSnapContent) !== false) {
+
+            return $this->generateCurrentKey($deviceName);
+
+        }
+        else {
+
+            throw new \Exception(__CLASS__ . " 'saveSnapCheck' method call failed");
+
+        }
+
+    }
+
+    public function loadSnapshot($deviceName, $key)
+    {
+
+        extract($this->configIO->getConfigData());
+
+        $loadSnapContent = file_get_contents($SnapshotSwapPath . "/" . $this->formatKey($deviceName, $key));
+
+        $snapSections = unserialize($loadSnapContent);
+
         $jSnapBundle = new JSnapSnapSectionBundle($key);
+
         foreach ($snapSections as $section) {
 
-            $section = explode("++----------++", $section);
-            $section_name = $section[0];
-            $section_xml = $section[1];
-            $jSnapBundle->addSnapshotSection(new JSnapSnapSectionXML($section_name, $key, $section_xml));
+            $jSnapBundle->addSnapshotSection(
+                new JSnapSnapSectionXML(
+                    $section->getSnapType(),
+                    $key,
+                    $section->getSnapData()
+                )
+            );
 
         }
 
@@ -47,9 +79,40 @@ class JSnapIODriverFiles extends JSnapIODriverAbstract
 
     }
 
-    public function loadList($deviceName)
+    public function loadSnapCheck($deviceName, $jSnapKey)
     {
-        $swapPath = $this->configIO->getConfigDataParameter('SwapPath');
+
+        extract($this->configIO->getConfigData());
+
+        $loadSnapContent = file_get_contents($SnapCheckSwapPath . "/" . $this->formatKey($deviceName, $jSnapKey));
+
+        $snapResults = unserialize($loadSnapContent);
+
+        $jSnapBundle = [];
+
+        $jSnapBundle ['failedTests'] = new JSnapSnapSectionBundle($jSnapKey);
+
+
+        foreach ($snapResults->getFailedTests() as $sectionName => $sectionData) {
+
+            $jSnapBundle['failedTests']->addSnapshotSection(
+                new JSnapSnapSectionXML(
+                    $sectionName,
+                    $jSnapKey,
+                    $sectionData
+                )
+            );
+
+        }
+
+        return $jSnapBundle;
+
+    }
+
+    public function loadSnapshotList($deviceName)
+    {
+
+        $swapPath = $this->configIO->getConfigDataParameter('SnapshotSwapPath');
 
         $swapDates = array();
 
@@ -72,7 +135,5 @@ class JSnapIODriverFiles extends JSnapIODriverAbstract
         return $swapDates;
 
     }
-
-
 
 }

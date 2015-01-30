@@ -8,7 +8,7 @@ use Lamoni\JSnapCommander\JSnapSnapSectionBundle\JSnapSnapSectionBundle;
 class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 {
 
-    public function snap($deviceName)
+    public function snapShot($deviceName)
     {
 
         try {
@@ -107,7 +107,7 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
                     "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:".
                     $JuiseExecutablePath . ":" . $JSnapExecutablePath . " " .
                     $JSnapExecutable . " --check {$snapTimes[0]},{$snapTimes[1]}" .
-                    " -t ".escapeshellarg($deviceName) .
+                    " -t ".escapeshellarg($deviceName) . ' ' .
                     escapeshellarg($CheckCommandLineArguments) . ' ' . $ConfigFile) . " 2>&1");
 
 
@@ -122,7 +122,7 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 
             if (strpos($output, "CHECKING SECTION: ") === false) {
 
-                throw new \Exception("jSnap failed to run, please ensure you can run it from the shell");
+                throw new \Exception("jSnap failed to run: {$output}");
 
             }
 
@@ -190,7 +190,7 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
             $output = shell_exec(escapeshellcmd(
                     "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:".
                     $JuiseExecutablePath . ":" . $JSnapExecutablePath . " " .
-                    $JSnapExecutable . " --snapcheck snapCheck{$deviceName}" .
+                    $JSnapExecutable . " --snapcheck {$deviceName}" .
                     ' -l ' . escapeshellarg($DeviceUsername) .
                     ' -p ' . escapeshellarg($DevicePassword) .
                     ' -t ' . escapeshellarg($deviceName) . ' ' .
@@ -207,7 +207,7 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 
             if (strpos($output, "CHECKING SECTION: ") === false) {
 
-                throw new \Exception("jSnap failed to run, please ensure you can run it from the shell");
+                throw new \Exception("jSnap --snapcheck failed to run: {$output}");
 
             }
 
