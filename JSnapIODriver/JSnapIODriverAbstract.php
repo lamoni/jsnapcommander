@@ -32,6 +32,8 @@ abstract class JSnapIODriverAbstract
 
     abstract public function loadSnapshotList($deviceName);
 
+    abstract public function deleteSnapshot($deviceName, $jSnapKey);
+
     public function generateCurrentKey($deviceName)
     {
         return $deviceName .

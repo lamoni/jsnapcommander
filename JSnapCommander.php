@@ -120,6 +120,33 @@ class JSnapCommander
 
     }
 
+    public function getAllSnapshots($dateFormat = "Y-m-d H:i:s")
+    {
+
+        $snapshots = $this->ioDriver->loadSnapshotList("*");
+
+        $resultSnapshots = [];
+
+        foreach ($snapshots as $snapshotDeviceName => $snapshotTimes) {
+
+            foreach ($snapshotTimes as $snapshotTime) {
+
+                $resultSnapshots[$snapshotDeviceName][$snapshotTime] = date($dateFormat, $snapshotTime);
+
+            }
+
+        }
+
+        return $resultSnapshots;
+    }
+
+    public function deleteSnapshot($deviceName, $snapTime)
+    {
+
+        return $this->ioDriver->deleteSnapshot($deviceName, $snapTime);
+
+    }
+
     public function splitKey($key)
     {
 

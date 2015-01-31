@@ -136,4 +136,19 @@ class JSnapIODriverFiles extends JSnapIODriverAbstract
 
     }
 
+    public function deleteSnapshot($deviceName, $jSnapKey)
+    {
+
+        $swapPath = $this->configIO->getConfigDataParameter('SnapshotSwapPath');
+
+        if (unlink("{$swapPath}/".$this->formatKey($deviceName, $jSnapKey)))
+        {
+            JSnapHelpers::JSONOutput("Snapshot deleted", 0);
+        }
+        else {
+            JSnapHelpers::JSONOutput("Unable to delete snapshot", 1);
+        }
+
+    }
+
 }
