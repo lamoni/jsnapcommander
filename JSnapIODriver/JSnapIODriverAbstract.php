@@ -38,7 +38,7 @@ abstract class JSnapIODriverAbstract
     {
         return $deviceName .
                 "_" .
-                $this->configIO->getConfigDataParameter('jSnapTime');
+                time();
     }
 
     public function splitKey($key)

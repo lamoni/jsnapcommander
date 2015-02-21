@@ -22,15 +22,12 @@ class JSnapCommander
     public function snapShot($deviceName)
     {
 
-        return json_encode(
-            array(
+        return array(
                 'snapID' => $this->ioDriver->saveSnapshot($deviceName,
                     $this->triggerDriver->snapShot($deviceName)
                 ),
                 'error' => 0
-            )
-        );
-
+            );
     }
 
     public function snapCheck($deviceName, $saveSnapCheck=false)

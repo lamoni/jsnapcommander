@@ -12,11 +12,7 @@ abstract class JSnapConfigAbstract
 
         $this->configData = $configData;
 
-        $this->configData['jSnapTime'] = time();
-
         $this->acceptableConfigData = static::getConfigDefinition();
-
-        $this->acceptableConfigData['jSnapTime'] = 'is_numeric';
 
         /**
          * Validate the inputted configData against the inputted acceptableConfigData

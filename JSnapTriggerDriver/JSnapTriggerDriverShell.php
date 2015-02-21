@@ -15,6 +15,8 @@ class JSnapTriggerDriverShell extends JSnapTriggerDriverAbstract
 
             extract($this->configIO->getConfigData());
 
+            $jSnapTime = time();
+
             chdir($SwapPath);
 
             $snapCmdOutput = shell_exec(escapeshellcmd('PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:' .
