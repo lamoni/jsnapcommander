@@ -88,7 +88,7 @@ class JSnapIODriverFiles extends JSnapIODriverAbstract
 
         $snapResults = unserialize($loadSnapContent);
 
-        $jSnapBundle = [];
+        $jSnapBundle = array();
 
         $jSnapBundle ['failedTests'] = new JSnapSnapSectionBundle($jSnapKey);
 

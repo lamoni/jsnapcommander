@@ -122,7 +122,7 @@ class JSnapCommander
 
         $snapshots = $this->ioDriver->loadSnapshotList("*");
 
-        $resultSnapshots = [];
+        $resultSnapshots = array();
 
         foreach ($snapshots as $snapshotDeviceName => $snapshotTimes) {
 
