@@ -8,7 +8,7 @@ Example
 ```php
 $commander = new JSnapCommander(
     new JSnapTriggerDriverShell(
-        new JSnapConfigTriggerShell('192.168.33.11',
+        new JSnapConfigTriggerShell(
             array(
                 'JSnapExecutable'   => '/vagrant/junos-snapshot-administrator/bin/jsnap',
                 'ConfigFile'   => '/vagrant/junos-snapshot-administrator/jsnap/samples/sample.conf',
@@ -20,7 +20,7 @@ $commander = new JSnapCommander(
         )
     ),
     new JSnapIODriverFiles(
-        new JSnapConfigIOFiles('192.168.33.11',
+        new JSnapConfigIOFiles(
             array(
                 'SwapPath' => '/var/www/html/swap/'
             )
@@ -28,5 +28,5 @@ $commander = new JSnapCommander(
     )
 );
 
-$commander->snap();
+$commander->snapShot('192.168.33.11');
 ```
