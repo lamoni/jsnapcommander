@@ -117,6 +117,27 @@ class JSnapCommander
 
     }
 
+    public function loadSnapshotList($deviceName)
+    {
+
+        $snapShots = $this->ioDriver->loadSnapshotList($deviceName);
+
+        $jSnapSnapList = array();
+
+        foreach ($snapShots as $snapName => $snapTimes) {
+
+            foreach ($snapTimes as $snapTime) {
+
+                $jSnapSnapList[$snapTime] = $snapName;
+
+            }
+
+        }
+
+        return $jSnapSnapList;
+
+    }
+
     public function getAllSnapshots($dateFormat = "Y-m-d H:i:s")
     {
 
